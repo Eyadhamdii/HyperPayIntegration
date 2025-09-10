@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <RootNamespace>HyperPayIntegration</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HyperPayIntegration.Domain\HyperPayIntegration.Domain.csproj" />
+    <ProjectReference Include="..\HyperPayIntegration.Application.Contracts\HyperPayIntegration.Application.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.8" />
+    <PackageReference Include="Volo.Abp.Account.Application" Version="8.3.0" />
+    <PackageReference Include="Volo.Abp.Identity.Application" Version="8.3.0" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.Application" Version="8.3.0" />
+    <PackageReference Include="Volo.Abp.TenantManagement.Application" Version="8.3.0" />
+    <PackageReference Include="Volo.Abp.FeatureManagement.Application" Version="8.3.0" />
+    <PackageReference Include="Volo.Abp.SettingManagement.Application" Version="8.3.0" />
+  </ItemGroup>
+
+</Project>
