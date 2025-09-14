@@ -34,6 +34,7 @@ namespace HyperPayIntegration.DTOS
     public class CreateCheckoutResponseDto
     {
         public string Id { get; set; }
+        public string EntityId { get; set; }
         public HyperPayResultDto Result { get; set; }
         public string BuildNumber { get; set; }
         public string Timestamp { get; set; }

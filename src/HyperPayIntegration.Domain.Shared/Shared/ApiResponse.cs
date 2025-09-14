@@ -34,7 +34,7 @@
         Forbidden,
         Unknown
     }
-    public static class HyperPayMessages
+    public static class HyperPayMessages 
     {
         public const string CheckoutCreated = "Checkout created successfully";
         public const string PaymentStatusRetrieved = "Payment status retrieved successfully";
@@ -49,5 +49,12 @@
     {
         public const string Checkouts = "checkouts";
         public const string CheckoutPayment = "checkouts/{0}/payment?entityId={1}";
+    }
+    public static class HyperPayRegex
+    {
+        public const string Success1 = "^(000\\.000\\.|000\\.100\\.1|000\\.[36])";
+        public const string Success2 = "^(000\\.400\\.0[^3]|000\\.400\\.[0-1]{2}0)";
+        public const string Pending1 = "^(000\\.200)";
+        public const string Pending2 = "^(800\\.400\\.5|100\\.400\\.500)";
     }
 }

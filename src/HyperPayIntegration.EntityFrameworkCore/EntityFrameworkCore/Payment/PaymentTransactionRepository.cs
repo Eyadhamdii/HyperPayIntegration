@@ -22,14 +22,9 @@ namespace HyperPayIntegration.EntityFrameworkCore.Payment
         public async Task<PaymentTransaction?> FindByCheckoutIdAsync(string checkoutId)
         {
             var dbContext = await GetDbContextAsync();
-            var sql = dbContext.PaymentTransactions.ToQueryString();
-            Console.WriteLine(sql);
-            var all = await dbContext.PaymentTransactions.ToListAsync();
-
-
-            var ayhaga = await dbContext.PaymentTransactions
-    .FirstOrDefaultAsync(x => x.CheckoutId.ToLower() == checkoutId.ToLower());
-            return ayhaga;
+            return await dbContext.PaymentTransactions
+                .IgnoreQueryFilters()
+                .FirstOrDefaultAsync(x => x.CheckoutId == checkoutId);
         }
     }
 }

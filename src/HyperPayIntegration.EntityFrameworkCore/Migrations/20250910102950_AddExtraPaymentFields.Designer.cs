@@ -4,6 +4,7 @@ using HyperPayIntegration.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace HyperPayIntegration.Migrations
 {
     [DbContext(typeof(HyperPayIntegrationDbContext))]
-    partial class HyperPayIntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250910102950_AddExtraPaymentFields")]
+    partial class AddExtraPaymentFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,9 +34,6 @@ namespace HyperPayIntegration.Migrations
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("BuildNumber")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CardBin")
                         .HasColumnType("nvarchar(max)");
@@ -83,9 +83,6 @@ namespace HyperPayIntegration.Migrations
                     b.Property<string>("Descriptor")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("EntityId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ExtraProperties")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -110,9 +107,6 @@ namespace HyperPayIntegration.Migrations
 
                     b.Property<int>("Method")
                         .HasColumnType("int");
-
-                    b.Property<string>("Ndc")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PaymentBrand")
                         .HasColumnType("nvarchar(max)");

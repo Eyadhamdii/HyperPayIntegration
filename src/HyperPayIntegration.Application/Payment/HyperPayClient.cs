@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -53,20 +54,21 @@ namespace HyperPayIntegration.Payment
             var dto = JsonSerializer.Deserialize<CreateCheckoutResponseDto>(json, _json);
             return ApiResponse<CreateCheckoutResponseDto>.Ok(dto!, HyperPayMessages.CheckoutCreated);
         }
-        public async Task<ApiResponse<PaymentStatusResponseDto>> CheckoutAsync(string id, HyperPayMethod method)
+        public async Task<ApiResponse<PaymentStatusResponseDto>> CheckoutAsync(string id, string entityId)
         {
             if (string.IsNullOrWhiteSpace(id))
                 return ApiResponse<PaymentStatusResponseDto>.Fail(
                     HyperPayErrorCode.InvalidRequest,
                     HyperPayMessages.InvalidCheckoutId);
 
-            var entityId = method == HyperPayMethod.Mada ? _opt.MadaEntityId : _opt.VisaMasterEntityId;
-
             var url = string.Format(HyperPayEndpoints.CheckoutPayment,
                         Uri.EscapeDataString(id),
                         Uri.EscapeDataString(entityId));
 
-            using var resp = await _http.GetAsync(url);
+            using var req = new HttpRequestMessage(HttpMethod.Get, url);
+            req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _opt.AccessToken);
+
+            using var resp = await _http.SendAsync(req);
             var json = await resp.Content.ReadAsStringAsync();
 
             if (!resp.IsSuccessStatusCode)
