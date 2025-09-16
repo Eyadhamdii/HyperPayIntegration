@@ -58,11 +58,17 @@ namespace HyperPayIntegration.Services
                     HyperPayMessages.StatusFailed);
 
             var response = await _client.CheckoutAsync(id, transaction.EntityId);
+            var result = response.Data;
 
             if (!response.Success)
+            {
+                transaction.Status = PaymentStatus.Failed;
+                transaction.ResultDescription = response.Message;
+                await _transactionRepository.UpdateAsync(transaction);
                 return response;
+            }
 
-            var result = response.Data;
+
             transaction.Status = MapHyperPayStatus(result.Result.Code);
             transaction.ResultCode = result.Result.Code;
             transaction.ResultDescription = result.Result.Description;
