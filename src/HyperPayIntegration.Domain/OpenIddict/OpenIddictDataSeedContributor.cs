@@ -18,9 +18,6 @@ using Volo.Abp.Uow;
 
 namespace HyperPayIntegration.OpenIddict;
 
-/* Creates initial data that is needed to property run the application
- * and make client-to-server communication possible.
- */
 public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDependency
 {
     private readonly IConfiguration _configuration;
@@ -85,15 +82,13 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
         {
             var webClientRootUrl = configurationSection["HyperPayIntegration_Web:RootUrl"]!.EnsureEndsWith('/');
 
-            /* HyperPayIntegration_Web client is only needed if you created a tiered
-             * solution. Otherwise, you can delete this client. */
             await CreateApplicationAsync(
                 name: webClientId!,
                 type: OpenIddictConstants.ClientTypes.Confidential,
                 consentType: OpenIddictConstants.ConsentTypes.Implicit,
                 displayName: "Web Application",
                 secret: configurationSection["HyperPayIntegration_Web:ClientSecret"] ?? "1q2w3e*",
-                grantTypes: new List<string> //Hybrid flow
+                grantTypes: new List<string> 
                 {
                     OpenIddictConstants.GrantTypes.AuthorizationCode, OpenIddictConstants.GrantTypes.Implicit
                 },
@@ -107,8 +102,6 @@ public class OpenIddictDataSeedContributor : IDataSeedContributor, ITransientDep
 
 
 
-
-        // Swagger Client
         var swaggerClientId = configurationSection["HyperPayIntegration_Swagger:ClientId"];
         if (!swaggerClientId.IsNullOrWhiteSpace())
         {

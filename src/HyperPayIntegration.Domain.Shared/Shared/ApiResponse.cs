@@ -23,38 +23,5 @@
         public static ApiResponse<T> Fail(HyperPayErrorCode code, string message, string? raw = null) =>
             new ApiResponse<T>(false, message, code, default, raw);
     }
-    public enum HyperPayErrorCode
-    {
-        None = 0,
-        InvalidMethod,
-        InvalidRequest,
-        CheckoutFailed,
-        StatusFailed,
-        Unauthorized,
-        Forbidden,
-        Unknown
-    }
-    public static class HyperPayMessages 
-    {
-        public const string CheckoutCreated = "Checkout created successfully";
-        public const string PaymentStatusRetrieved = "Payment status retrieved successfully";
-        public const string InvalidMethod = "Payment method must be Mada or VisaMaster";
-        public const string InvalidCheckoutId = "Checkout ID is required";
-        public const string CheckoutFailed = "Checkout request failed";
-        public const string StatusFailed = "Failed to fetch payment status";
-        public const string MethodRequired = "Payment method must be Mada or VisaMaster";
-        public const string PaymentStatusFailed = "Failed to get payment status";
-    }
-    public static class HyperPayEndpoints
-    {
-        public const string Checkouts = "checkouts";
-        public const string CheckoutPayment = "checkouts/{0}/payment?entityId={1}";
-    }
-    public static class HyperPayRegex
-    {
-        public const string Success1 = "^(000\\.000\\.|000\\.100\\.1|000\\.[36])";
-        public const string Success2 = "^(000\\.400\\.0[^3]|000\\.400\\.[0-1]{2}0)";
-        public const string Pending1 = "^(000\\.200)";
-        public const string Pending2 = "^(800\\.400\\.5|100\\.400\\.500)";
-    }
+    
 }

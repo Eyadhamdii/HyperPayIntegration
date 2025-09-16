@@ -28,7 +28,6 @@ public class HyperPayIntegrationApplicationModule : AbpModule
 {
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
-        //context.Services.AddHttpClient<HyperPayService>();
         var config = context.Services.GetConfiguration();
 
         context.Services.Configure<HyperPayOptions>(config.GetSection("Payment:HyperPay"));

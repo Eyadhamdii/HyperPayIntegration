@@ -6,8 +6,6 @@ using Microsoft.Extensions.Configuration;
 
 namespace HyperPayIntegration.EntityFrameworkCore;
 
-/* This class is needed for EF Core console commands
- * (like Add-Migration and Update-Database commands) */
 public class HyperPayIntegrationDbContextFactory : IDesignTimeDbContextFactory<HyperPayIntegrationDbContext>
 {
     public HyperPayIntegrationDbContext CreateDbContext(string[] args)

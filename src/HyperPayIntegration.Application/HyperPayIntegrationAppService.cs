@@ -6,8 +6,6 @@ using Volo.Abp.Application.Services;
 
 namespace HyperPayIntegration;
 
-/* Inherit your application services from this class.
- */
 public abstract class HyperPayIntegrationAppService : ApplicationService
 {
     protected HyperPayIntegrationAppService()

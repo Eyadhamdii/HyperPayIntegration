@@ -9,8 +9,6 @@ public class HyperPayIntegrationPermissionDefinitionProvider : PermissionDefinit
     public override void Define(IPermissionDefinitionContext context)
     {
         var myGroup = context.AddGroup(HyperPayIntegrationPermissions.GroupName);
-        //Define your own permissions here. Example:
-        //myGroup.AddPermission(HyperPayIntegrationPermissions.MyPermission1, L("Permission:MyPermission1"));
     }
 
     private static LocalizableString L(string name)

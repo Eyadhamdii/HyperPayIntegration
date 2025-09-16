@@ -10,13 +10,10 @@ namespace HyperPayIntegration.DTOS
     public class CreateCheckoutInput
     {
         public decimal Amount { get; set; }
-
         [Required]
         public string Currency { get; set; } = "SAR";
-
         [Required]
         public HyperPayMethod Method { get; set; }
-
         public string Email { get; set; }
         public string BillingStreet1 { get; set; }
         public string BillingCity { get; set; }

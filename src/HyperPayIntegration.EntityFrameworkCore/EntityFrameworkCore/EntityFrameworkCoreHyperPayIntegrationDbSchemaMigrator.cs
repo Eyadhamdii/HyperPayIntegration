@@ -20,11 +20,6 @@ public class EntityFrameworkCoreHyperPayIntegrationDbSchemaMigrator
 
     public async Task MigrateAsync()
     {
-        /* We intentionally resolve the HyperPayIntegrationDbContext
-         * from IServiceProvider (instead of directly injecting it)
-         * to properly get the connection string of the current tenant in the
-         * current scope.
-         */
 
         await _serviceProvider
             .GetRequiredService<HyperPayIntegrationDbContext>()
