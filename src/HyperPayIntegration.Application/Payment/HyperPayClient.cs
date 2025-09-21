@@ -91,7 +91,9 @@ namespace HyperPayIntegration.Payment
                 ["entityId"] = entityId,
                 ["amount"] = input.Amount.ToString(CultureInfo.InvariantCulture),
                 ["currency"] = input.Currency,
-                ["paymentType"] = "DB"
+                ["paymentType"] = "DB",
+                ["integrity"] = "true"
+
             };
 
             AddIf(form, "merchantTransactionId", input.MerchantTransactionId);
