@@ -14,30 +14,26 @@ namespace HyperPayIntegration.Payment
     public class HyperPayClient
     {
         private readonly HttpClient _http;
-        private readonly HyperPayOptions _opt;
+        private readonly HyperPayOptions _options;
         private readonly JsonSerializerOptions _json;
 
         public HyperPayClient(HttpClient http, IOptions<HyperPayOptions> opt)
         {
             _http = http;
-            _opt = opt.Value;
+            _options = opt.Value;
             _json = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         }
 
         public async Task<ApiResponse<CreateCheckoutResponseDto>> CompletePaymentAsync(CreateCheckoutInput input)
         {
-            if (input.Method != HyperPayMethod.Mada && input.Method != HyperPayMethod.VisaMaster)
+            if (!Enum.IsDefined(typeof(HyperPayMethod), input.Method))
             {
                 return ApiResponse<CreateCheckoutResponseDto>.Fail(
                     HyperPayErrorCode.InvalidMethod,
                     HyperPayMessages.MethodRequired);
             }
 
-            var entityId = input.Method == HyperPayMethod.Mada
-                ? _opt.MadaEntityId
-                : _opt.VisaMasterEntityId;
-
-            var form = BuildCheckoutForm(input, entityId);
+            var form = BuildCheckoutForm(input, _options.EntityId);
 
             var content = new FormUrlEncodedContent(form);
             var resp = await _http.PostAsync(HyperPayEndpoints.Checkouts, content);
@@ -66,7 +62,7 @@ namespace HyperPayIntegration.Payment
                         Uri.EscapeDataString(entityId));
 
             using var req = new HttpRequestMessage(HttpMethod.Get, url);
-            req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _opt.AccessToken);
+            req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _options.AccessToken);
 
             using var resp = await _http.SendAsync(req);
             var json = await resp.Content.ReadAsStringAsync();
@@ -103,9 +99,15 @@ namespace HyperPayIntegration.Payment
             AddIf(form, "billing.state", input.BillingState);
             AddIf(form, "billing.country", input.BillingCountry);
             AddIf(form, "billing.postcode", input.BillingPostcode);
+            AddIf(form, "customer.givenName", input.CustomerFirstName);
+            AddIf(form, "customer.surname", input.CustomerLastName);
 
-            if (_opt.UseTestMode && input.Method != HyperPayMethod.Mada)
+            if (_options.UseTestMode)
+            {
                 form["testMode"] = "EXTERNAL";
+                form["customParameters[3DS2_enrolled]"] = "true";
+                form["customParameters[3DS2_flow]"] = "challenge";
+            }
 
             return form;
         }

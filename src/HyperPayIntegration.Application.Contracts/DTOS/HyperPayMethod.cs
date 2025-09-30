@@ -8,7 +8,8 @@ namespace HyperPayIntegration.DTOS
 {
     public enum HyperPayMethod
     {
-        VisaMaster = 1,
-        Mada = 2
+        Visa = 1,
+        Master = 2,
+        Mada = 3
     }
 }

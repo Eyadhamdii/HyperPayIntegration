@@ -15,6 +15,8 @@ namespace HyperPayIntegration.DTOS
         [Required]
         public HyperPayMethod Method { get; set; }
         public string Email { get; set; }
+        public string CustomerFirstName { get; set; }   
+        public string CustomerLastName { get; set; }    
         public string BillingStreet1 { get; set; }
         public string BillingCity { get; set; }
         public string BillingState { get; set; }

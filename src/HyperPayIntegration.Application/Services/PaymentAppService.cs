@@ -14,12 +14,12 @@ namespace HyperPayIntegration.Services
     {
         private readonly HyperPayClient _client;
         private readonly IPaymentTransactionRepository _transactionRepository;
-        private readonly HyperPayOptions _opt;
+        private readonly HyperPayOptions _options;
         public PaymentAppService(HyperPayClient client,IPaymentTransactionRepository transactionRepository,IOptions<HyperPayOptions> opt)
         {
             _client = client;
             _transactionRepository = transactionRepository;
-            _opt = opt.Value;
+            _options = opt.Value;
         }
         public async Task<ApiResponse<CreateCheckoutResponseDto>> CompletePaymentAsync(CreateCheckoutInput input)
         {
@@ -28,36 +28,40 @@ namespace HyperPayIntegration.Services
             if (!response.Success)
                 return response;
 
-            var entityId = input.Method == HyperPayMethod.Mada
-                ? _opt.MadaEntityId
-                : _opt.VisaMasterEntityId;
-
-            var transaction = new PaymentTransaction
+            if (_options.EnableDatabasePersistence)
             {
-                CheckoutId = response.Data.Id,
-                EntityId = entityId,
-                MerchantTransactionId = input.MerchantTransactionId,
-                Method = input.Method,
-                Amount = input.Amount,
-                Currency = input.Currency,
-                Status = PaymentStatus.Pending,
-                TransactionDate = DateTime.UtcNow
-            };
+                var transaction = new PaymentTransaction
+                {
+                    CheckoutId = response.Data.Id,
+                    EntityId = _options.EntityId,
+                    MerchantTransactionId = input.MerchantTransactionId,
+                    Method = input.Method,
+                    Amount = input.Amount,
+                    Currency = input.Currency,
+                    Status = PaymentStatus.Pending,
+                    TransactionDate = DateTime.UtcNow
+                };
 
-            await _transactionRepository.InsertAsync(transaction);
+                await _transactionRepository.InsertAsync(transaction);
+            }
 
             return response;
         }
 
         public async Task<ApiResponse<PaymentStatusResponseDto>> CheckoutAsync(string id, HyperPayMethod method)
         {
+            if (!_options.EnableDatabasePersistence)
+            {
+                return await _client.CheckoutAsync(id, _options.EntityId);
+            }
+
             var transaction = await _transactionRepository.FindByCheckoutIdAsync(id);
             if (transaction == null)
                 return ApiResponse<PaymentStatusResponseDto>.Fail(
                     HyperPayErrorCode.InvalidMethod,
                     HyperPayMessages.StatusFailed);
 
-            var response = await _client.CheckoutAsync(id, transaction.EntityId);
+            var response = await _client.CheckoutAsync(id, _options.EntityId);
             var result = response.Data;
 
             if (!response.Success)
@@ -67,7 +71,6 @@ namespace HyperPayIntegration.Services
                 await _transactionRepository.UpdateAsync(transaction);
                 return response;
             }
-
 
             transaction.Status = MapHyperPayStatus(result.Result.Code);
             transaction.ResultCode = result.Result.Code;
@@ -86,7 +89,6 @@ namespace HyperPayIntegration.Services
             await _transactionRepository.UpdateAsync(transaction);
 
             return response;
-            
         }
 
 

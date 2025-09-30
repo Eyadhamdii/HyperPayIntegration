@@ -26,5 +26,6 @@ namespace HyperPayIntegration.EntityFrameworkCore.Payment
                 .IgnoreQueryFilters()
                 .FirstOrDefaultAsync(x => x.CheckoutId == checkoutId);
         }
+
     }
 }
