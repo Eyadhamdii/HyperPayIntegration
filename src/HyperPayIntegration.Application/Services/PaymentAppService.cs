@@ -48,7 +48,7 @@ namespace HyperPayIntegration.Services
             return response;
         }
 
-        public async Task<ApiResponse<PaymentStatusResponseDto>> CheckoutAsync(string id, HyperPayMethod method)
+        public async Task<ApiResponse<PaymentStatusResponseDto>> CheckoutAsync(string id)
         {
             if (!_options.EnableDatabasePersistence)
             {

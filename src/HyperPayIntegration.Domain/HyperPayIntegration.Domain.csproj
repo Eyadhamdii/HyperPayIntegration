@@ -1,29 +1,40 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\..\common.props" />
+	<Import Project="..\..\common.props" />
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>disable</Nullable>
-    <RootNamespace>HyperPayIntegration</RootNamespace>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>disable</Nullable>
+		<RootNamespace>HyperPayIntegration</RootNamespace>
 
-  <ItemGroup>
-    <ProjectReference Include="..\HyperPayIntegration.Application.Contracts\HyperPayIntegration.Application.Contracts.csproj" />
-    <ProjectReference Include="..\HyperPayIntegration.Domain.Shared\HyperPayIntegration.Domain.Shared.csproj" />
-  </ItemGroup>
+		<!-- Make packable -->
+		<IsPackable>true</IsPackable>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
-  <ItemGroup>
-    <PackageReference Include="Volo.Abp.Emailing" Version="8.3.0" />
-    <PackageReference Include="Volo.Abp.Identity.Domain" Version="8.3.0" />
-    <PackageReference Include="Volo.Abp.PermissionManagement.Domain.Identity" Version="8.3.0" />
-    <PackageReference Include="Volo.Abp.BackgroundJobs.Domain" Version="8.3.0" />
-    <PackageReference Include="Volo.Abp.AuditLogging.Domain" Version="8.3.0" />
-    <PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="8.3.0" />
-    <PackageReference Include="Volo.Abp.FeatureManagement.Domain" Version="8.3.0" />
-    <PackageReference Include="Volo.Abp.SettingManagement.Domain" Version="8.3.0" />
-    <PackageReference Include="Volo.Abp.OpenIddict.Domain" Version="8.3.0" />
-    <PackageReference Include="Volo.Abp.PermissionManagement.Domain.OpenIddict" Version="8.3.0" />
-  </ItemGroup>
+		<!-- NuGet metadata -->
+		<PackageId>HyperPayIntegration.Domain</PackageId>
+		<Version>1.0.0</Version>
+		<Authors>Eyad</Authors>
+		<Description>Domain layer for HyperPay integration (entities, enums, core logic).</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\HyperPayIntegration.Application.Contracts\HyperPayIntegration.Application.Contracts.csproj" />
+		<ProjectReference Include="..\HyperPayIntegration.Domain.Shared\HyperPayIntegration.Domain.Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Volo.Abp.Emailing" Version="8.3.0" />
+		<PackageReference Include="Volo.Abp.Identity.Domain" Version="8.3.0" />
+		<PackageReference Include="Volo.Abp.PermissionManagement.Domain.Identity" Version="8.3.0" />
+		<PackageReference Include="Volo.Abp.BackgroundJobs.Domain" Version="8.3.0" />
+		<PackageReference Include="Volo.Abp.AuditLogging.Domain" Version="8.3.0" />
+		<PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="8.3.0" />
+		<PackageReference Include="Volo.Abp.FeatureManagement.Domain" Version="8.3.0" />
+		<PackageReference Include="Volo.Abp.SettingManagement.Domain" Version="8.3.0" />
+		<PackageReference Include="Volo.Abp.OpenIddict.Domain" Version="8.3.0" />
+		<PackageReference Include="Volo.Abp.PermissionManagement.Domain.OpenIddict" Version="8.3.0" />
+	</ItemGroup>
 
 </Project>

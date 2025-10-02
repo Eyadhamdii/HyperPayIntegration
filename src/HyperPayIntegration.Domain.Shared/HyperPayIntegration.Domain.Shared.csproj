@@ -7,6 +7,12 @@
     <Nullable>enable</Nullable>
     <RootNamespace>HyperPayIntegration</RootNamespace>
     <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+
+	  <PackageId>HyperPayIntegration.Domain.Shared</PackageId>
+	  <Version>1.0.0</Version>
+	  <Authors>Eyad</Authors>
+	  <Description>HyperPay integration - Domain.Shared layer</Description>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

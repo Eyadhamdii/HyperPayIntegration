@@ -12,6 +12,6 @@ namespace HyperPayIntegration.Payment
     public interface IPaymentAppService : IApplicationService
     {
         Task<ApiResponse<CreateCheckoutResponseDto>> CompletePaymentAsync(CreateCheckoutInput input);
-        Task<ApiResponse<PaymentStatusResponseDto>> CheckoutAsync(string id, HyperPayMethod method);
+        Task<ApiResponse<PaymentStatusResponseDto>> CheckoutAsync(string id);
     }
 }
